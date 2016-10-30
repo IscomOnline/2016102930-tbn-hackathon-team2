@@ -1,0 +1,27 @@
+﻿@import '/CSS/common.rwd.menu.css';
+
+@media (max-width: 1023px) {
+    /*隱藏GIS*/
+    #menuGIS, #menuGIS_footer { display:none; }
+}
+
+@media (max-width: 767px) {
+    /*裝飾元素關閉*/
+    #content_decbar .pure-u-md-1-4 { display:none; }
+    /*子選單加入背景圖片*/
+    #main_left_inner { min-height: auto; padding-left: 2em; background:#F4F3EE url('/Images/bg_content_right_repeat.jpg') repeat-y left;  }    
+    /*左選單調整*/
+    #sub-nav { margin-bottom: 0; }
+    #sub-nav li{ display: inline-block; width: auto; }
+    /*右主顯示內容調整*/
+    #main_right_inner { padding-left: 0; }   
+    /*隱藏熊*/
+    #warpper { background: none !important; /*隱藏熊*//*因此CSS引入時間過早，故以imporntat優先引入*/ } 
+    /*LOGO變成以 1/2 格式對照*/
+    #logo img { width: 95%; margin-left: 0 !important;/*因此CSS引入時間過早，故以imporntat優先引入*/ }
+}
+
+@media (max-width: 568px) { /*35.5em*/
+    #func img { width: 80%; }
+    #page_title ul { display:none; }
+} 

@@ -1,0 +1,942 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://www.tbn.org.tw/RecordProvided/RecordAdd -->
+<html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" src="./新增生物記錄_files/linkid.js.下載"></script>
+    
+
+    
+    <title>新增生物記錄</title>
+
+    <link rel="shortcut icon" href="http://www.tbn.org.tw/Images/SmallBear.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     
+    <script async="" src="./新增生物記錄_files/analytics.js.下載"></script><script src="./新增生物記錄_files/jquery.min.js.下載"></script>
+    <script src="./新增生物記錄_files/jquery-ui.min.js.下載"></script>
+    <script src="./新增生物記錄_files/bootstrap.min.js.下載" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="./新增生物記錄_files/jquery.validate.min.js.下載" type="text/javascript"></script>
+    <script src="./新增生物記錄_files/BCAddValidate.js.下載" type="text/javascript"></script>
+    <script src="./新增生物記錄_files/messages_zh_TW.js.下載" type="text/javascript"></script>
+    <script src="./新增生物記錄_files/jquery.sweetalert.min.js.下載"></script><!--彈跳視窗-->
+    <script src="./新增生物記錄_files/jquery.mousewheel-3.0.6.pack.js.下載" type="text/javascript"></script>
+    <script src="./新增生物記錄_files/jquery.fancybox.pack.js.下載" type="text/javascript"></script>
+    <script type="text/javascript" src="./新增生物記錄_files/jquery.blockUI.js.下載"></script>
+
+    
+    <link rel="stylesheet" href="./新增生物記錄_files/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./新增生物記錄_files/Table_style.css">
+    <link rel="Stylesheet" type="text/css" href="./新增生物記錄_files/common.css">
+    <link rel="Stylesheet" type="text/css" href="./新增生物記錄_files/common.rwd.css">
+
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="/CSS/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./新增生物記錄_files/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" href="./新增生物記錄_files/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="./新增生物記錄_files/jquery.sweetalert.css">
+    <link href="./新增生物記錄_files/jquery.fancybox.css" rel="stylesheet" type="text/css">
+
+    
+    <script type="text/javascript">
+        $().ready(function () {
+            GetLetterCount();
+            GetBrowserCount();
+
+            //GoogleAnalytics
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-57784047-1', 'auto');
+            ga('require', 'linkid'); 
+            ga('send', 'pageview');
+
+            //showList('tool_about');
+
+            /* Menus */
+            $('#nav ul > li').bind('mouseover', openSubMenu);
+            $('#nav ul > li').bind('mouseout', closeSubMenu);
+            
+            function openSubMenu() {
+                $(this).find('ul').css('display', 'block');    
+            };
+            
+            function closeSubMenu() {
+                $(this).find('ul').css('display', 'none'); 
+            };
+
+            $('#RWDMenu_Trigger').click(function () {
+                $('#RWDmenu ul').toggle('slow');
+                $(this).toggleClass('RWDMenu_Trigger_Acitve');
+            });
+
+            /*(重要)內頁編排模式給定，避免須要修改全部的靜態頁面*/
+            $('#main_left').addClass('pure-u-1-1 pure-u-md-1-4');
+            $('#main_right').addClass('pure-u-1-1 pure-u-md-3-4');
+
+        });
+
+        function showList(id) {
+            var ulID = id + "List";
+            $('ul.popOut[id!=' + ulID + ']').hide();
+            $("#" + ulID).toggle(); 
+            return false;
+        }
+
+        function GetBrowserCount() {
+            $.ajax({
+                url: "/System/GetBrowserCountByJson",
+                type: "post",
+                dataType: "json",
+                data: {
+                },
+                success: function (data) {
+                    $("#browser_count span").text(data);
+                }
+            });
+        }
+
+        function searchSurveyData() {
+            if ($('#txtSearchWeb').val() == "") {
+                showMsg("請輸入關鍵字!");
+            }
+            else if ($('#txtSearchWeb').val().match(/[ `~!#$%^&*\()+\|{}\[\]:;\"\'<,>.\/\\?]/)) {
+                showMsg("請勿輸入特殊符號!");
+            }
+            else {
+                location.href = "/Main/SearchSurveyInfo?keyWord=" + $('#txtSearchWeb').val();
+            }
+        }
+
+        function GetLetterCount() {
+            var lengthCount = $('#LetterLi').length;
+            
+            if (lengthCount > 0)
+            {
+                $.ajax({
+                    url: "/Personal/GetLetterCount",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                    },
+                    success: function (result) {
+                        var result = "站內信訊息<font color=\"red\">(" + result + ")</font>";
+
+                        $('#LetterHref').html(result);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        showMsg("系統異常，煩請通知開發團隊，感謝。");
+                    }
+                });
+            }
+        }
+    </script>
+
+    
+    <style>
+        #warpper { position:relative; z-index:100; background:url('/Images/fig_bear_small.png') no-repeat; background-position:95% 80px;  } 
+
+        #logo {}
+            /*#logo h1 { margin:0; margin-top:10px; background:url('/Images/fig_logo_small.png') no-repeat; width:295px; height:0 !important; text-indent:-9999px; padding-top:171px; overflow:hidden; }*/
+
+            #logo h1 { text-indent: -9999px; margin: 0;  height: 0; } 
+            #logo img { margin:0; margin-left: 3%; margin-top:30px;  }
+
+            #browser_count { margin-left:165px; color:#33321D; font-size:0.6em; }
+            
+        #func { padding-top:40px; text-align: center; }
+            #func a { } 
+            #btnToKnowBio {  }
+            #btnProvideBio { }
+        
+        #content { min-height:400px;  }
+    </style>
+
+
+    
+    <script type="text/javascript" src="./新增生物記錄_files/js"></script>
+    <script src="./新增生物記錄_files/lib.integrate.js.下載"></script>
+    <script src="./新增生物記錄_files/RecordScreipt.js.下載" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        var canvas = '#map_canvas';
+        var platform = 'tgos';
+        var IMap = new IMap();
+        var _geocoder = new google.maps.Geocoder();
+
+        $().ready(function () {
+            IMap.set_platform(platform);
+            IMap.set_map_selector(canvas);
+            IMap.build();
+
+            //4秒後執行地圖完成後動作
+            setTimeout(mapAfterAction, 4000);
+
+            $("form").validate({
+                //驗證成功後才執行，但會中斷submit，所以需要在post一次
+                submitHandler: function (form) {
+                    //確認時段
+                    if ($('input:radio[name="TimeType"]:checked').val() == "0") {
+                        $("#ConfigCondition_ConditionResult05").val($("#ConfigCondition_ConditionResult04").val());
+                        $("#ConfigCondition_ConditionResult06").val("0");
+                        $("#ConfigCondition_ConditionResult08").val("0");
+                        switch ($("#ConfigCondition_ConditionResult04").val()) {
+                            case "4":
+                                $("#ConfigCondition_ConditionResult07").val("11");
+                                break;
+                            case "11":
+                                $("#ConfigCondition_ConditionResult07").val("13");
+                                break;
+                            case "13":
+                                $("#ConfigCondition_ConditionResult07").val("18");
+                                break;
+                            case "18":
+                                $("#ConfigCondition_ConditionResult07").val("0");
+                                break;
+                            case "0":
+                                $("#ConfigCondition_ConditionResult07").val("4");
+                                break;
+                        }
+                    }
+
+                    if ($("#SpEName").val() == "" && $("#SpCName").val() == "" && !$("#identify").prop("checked")) {
+                        showMsg("物種名稱或幫我辨識此生物需二擇一");
+                        return false;
+                    }
+
+                    // 設定檔案上傳清單
+                    SetDataFromIFrame();
+                    $.post(url, data, successCallback);
+                } //end submit hanlder
+            }); //end form validate
+
+            $("#m_Survey_Addr").rules('add', {
+                maxlength: 22,
+                messages: {
+                    maxlength: "不可多於22個字"
+                }
+            });
+
+            //學名自動完成
+            $("#SpEName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/BiologicalInformation/SpENameAutoCompleteByJson",
+                        dataType: "json",
+                        data: {
+                            InputString: request.term
+                        },
+                        success: function (data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 3,
+                select: function (event, ui) {
+                    var SpCName = $.trim(ui.item.SpCName);
+                    log(ui.item ? ui.item.SpCName : "Nothing selected");
+                },
+                open: function () {
+                    $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+                },
+                close: function () {
+                    $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+                }
+            });
+
+            //中文名稱自動完成
+            $("#SpCName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/BiologicalInformation/SpCNameAutoCompleteByJson",
+                        dataType: "json",
+                        data: {
+                            InputString: request.term
+                        },
+                        success: function (data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 1,
+                select: function (event, ui) {
+                    var SpEName = $.trim(ui.item.SpEName);
+                    log2(ui.item ? SpEName : "Nothing selected");
+                },
+                open: function () {
+                    $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+                },
+                close: function () {
+                    $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+                }
+            });
+
+            //取得地址
+            $('#btnGetAddress').click(function () {
+                var value = $('#txtAddress').val();
+                ShowAddressGeocode(value);
+            });
+
+            $("#identify").click(function () {
+                $("#IsIdentify").val($("#identify").prop("checked"));
+            });
+        });
+
+        //地圖後執行步驟
+        function mapAfterAction() {
+            //下面此段專門FOR TGOS平台
+            try {
+                IMap._core.TGEvent.addListener(IMap._map, 'click', function (result) {
+                    var point = result.point; console.log(point);
+                    IMap._op.removeMarker('MapClick');
+                    IMap._op.addMarker(point.x, point.y, 'MapClick');
+
+                    $('#txtLat').val(point.y); //緯度
+                    $('#txtLon').val(point.x); //經度
+
+                    GetLatLanCity();
+                });
+            } catch (error) {
+                console.warn('注意: 地圖後執行步驟出現錯誤，此頁面僅提供 TGOS 功能未提供 Google Map 功能');
+                console.log(error);
+            }
+        }
+
+        //Google Map : 取得經緯度對應之鄉鎮、城市資料
+        function GetLatLanCity() {
+            var LatLng = new google.maps.LatLng($('#txtLat').val(), $('#txtLon').val());
+            var Downtown = '0';
+            var City = '0';
+
+            _geocoder.geocode({ 'latLng': LatLng }, function (results, status) {
+                var isFindAddress = (status == google.maps.GeocoderStatus.OK && results[0]) ? true : false; //results[0].formatted_address : null; //此行目前僅作為判斷用
+
+                if (isFindAddress) {
+                    console.log(results);
+                    var Result = results[3];
+
+                    //從結果集合中取得城市及鄉鎮資料
+                    if (typeof Result != 'undefined') {
+                        for (var i = 0; i < Result.address_components.length; i++) {
+                            //console.log(Result.address_components[i].types);
+                            for (var j = 0; j < Result.address_components[i].types.length; j++) {
+                                var tmp = Result.address_components[i].types[j];
+                                if (tmp == "administrative_area_level_3") Downtown = Result.address_components[i].long_name;
+                                if (tmp == "administrative_area_level_2" ||
+                            tmp == "administrative_area_level_1") City = Result.address_components[i].long_name;
+                            }
+                        }
+                    } //end if
+                }
+
+                $('#hidDowntown').val((typeof Downtown === 'undefined') ? '0' : Downtown); //鄉鎮資料
+                $('#hidCity').val((typeof City === 'undefined') ? '0' : City); //縣市資料
+
+                console.log($('#hidDowntown').val());
+                console.log($('#hidCity').val());
+            });
+        }
+
+        //Google Map : 依照地址取得地標
+        function ShowAddressGeocode(address) {
+            _geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var ResultLatLng = results[0].geometry.location;
+
+                    var x = ResultLatLng.lng();
+                    var y = ResultLatLng.lat();
+
+                    //設定該座標之唯一索引
+                    var ID = "SearchResultMarker";
+
+                    //若此座標已存在，則移除
+                    IMap._op.removeMarker(ID);
+
+                    //設定地圖中心
+                    IMap._op.setMapCenter(IMap._op.point(x, y));
+
+                    IMap._op.addMarker(x, y, ID);
+
+                    $('#txtLat').val(y); //緯度
+                    $('#txtLon').val(x); //經度
+
+                    GetLatLanCity();
+
+                } else alert('找不到此地址資訊!');
+            });
+        }
+
+        function getImagefileName() {
+            var imgNameList = []; //圖片名稱陣列
+
+            //抓取目前畫面上所有圖片名稱
+            $('#ifmFile').contents().find('img').each(function () {
+                var temp = $(this).attr('src');
+                var splitList = temp.split('/');
+                imgNameList.push(splitList[splitList.length - 1]);
+            });
+
+            //開發階段測試用
+            //            for (i = 0; i < imgNameList.length; i++) {
+            //                alert(imgNameList[i]);
+            //            }
+
+            //AJAX去後端撈取檔名圖片GPS訊息
+            $.ajax({
+                url: '/Exif/ExifDataMsg',
+                data: JSON.stringify({ "paramName": imgNameList }),
+                type: "POST",
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    console.log(msg);
+
+                    if (msg == false) {
+                        swal({ title: "請上傳照片!!",
+                            text: "貼心小提醒：\n上傳擁有時間、GPS訊息的照片即可幫你自動帶入資訊!!",
+                            timer: 5000,
+                            showConfirmButton: true,
+                            closeOnConfirm: true,
+                            type: "error"
+                        }
+                        );
+                        return;
+                    }
+
+                    //預先載入原始座標點
+                    $("#txtLon").val(msg[1]);
+                    $("#txtLat").val(msg[0]);
+
+                    //年
+                    $("#ConfigCondition_ConditionResult01 option").filter(function () {
+                        return $(this).text() == msg[2];
+                    }).attr('selected', true);
+
+                    //月
+                    $("#ConfigCondition_ConditionResult02 option").filter(function () {
+                        return $(this).text() == msg[3];
+                    }).attr('selected', true);
+
+                    //日
+                    $("#ConfigCondition_ConditionResult03 option").filter(function () {
+                        return $(this).text() == msg[4];
+                    }).attr('selected', true);
+
+                    //時段
+                    $("#ConfigCondition_ConditionResult04 option").filter(function () {
+                        return $(this).val() == msg[5];
+                    }).attr('selected', true);
+
+                    swal({ title: "EXIF資訊載入成功!!",
+                        text: "",
+                        timer: 3000,
+                        showConfirmButton: true,
+                        closeOnConfirm: true,
+                        type: "success"
+                    }
+                    );
+
+                    //打點放在最後面，不然TGOS地圖壞掉會造成後面都有問題
+                    var lon = $('#txtLon').val(); //經度
+                    var lat = $('#txtLat').val(); //緯度
+                    IMap._op.addMarker(lon, lat, 'MapClick');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //錯誤訊息
+                    swal({ title: xhr.status,
+                        text: thrownError,
+                        timer: 3000,
+                        showConfirmButton: true,
+                        closeOnConfirm: true,
+                        type: "success"
+                    }
+                    );
+                }
+            });
+
+        }
+    </script><script type="text/javascript" charset="UTF-8" src="./新增生物記錄_files/common.js.下載"></script><script type="text/javascript" charset="UTF-8" src="./新增生物記錄_files/util.js.下載"></script><script type="text/javascript" charset="UTF-8" src="./新增生物記錄_files/geocoder.js.下載"></script>
+    <style type="text/css">
+        .ui-autocomplete-loading
+        {
+            background: white url("../../Scripts/jquery-ui-1.10.4.custom/development-bundle/demos/autocomplete/images/ui-anim_basic_16x16.gif") right center no-repeat;
+        }
+        
+        #map_canvas { width: 100%; height: 400px; }
+        
+        .title_survay {
+            display: block; font-weight: bold; background: url('/Images/bg_title_2.png') no-repeat; padding-left: 14px;
+            line-height: 31px;  margin: 15px 0;
+        }
+
+        .green-button { background: #51A351; color: white; }
+        .blue-button { background:#5D90EE;  color: white; }
+
+        /*tmp*/
+        form > div { width:96%; margin: 0 auto; } 
+        textarea { width: 228px; height: 245px }
+        
+        @media (max-width: 1023px) {
+            textarea { width:100%; height:150px; }
+            #araePhoto { margin-top:10px; }
+        }
+
+        @media (max-width: 568px) { /*35.5em*/
+            #main_right .pure-u-1-1 { margin-bottom:10px; }
+            #main_left { display:none; }
+            #map_canvas { width:90%; margin: 0 auto; }
+        } 
+
+        @media only screen and (max-width: 480px) 
+        {
+            .pure-form input[type=text], .pure-form label { display:inline-block; } /*修正CSS Framework*/
+        }
+    </style>
+
+<style type="text/css">.fancybox-margin{margin-right:17px;}</style><script type="text/javascript" charset="UTF-8" src="./新增生物記錄_files/stats.js.下載"></script></head>
+
+
+<body>
+
+<div id="bodyWrapper">
+  
+    <div id="main_left" class="pure-u-1-1 pure-u-md-1-4">
+        <div id="main_left_inner">
+            <h3>
+                編輯生物紀錄</h3>
+        </div>
+    </div>
+    <div id="main_right" class="pure-u-1-1 pure-u-md-3-4">
+        <div id="main_right_inner">
+            <div id="page_title">
+                <h2>
+                    新增生物紀錄</h2>
+                <ul>
+                    <li><a href="http://www.tbn.org.tw/RecordProvided/RecordAdd#">提供生物資料</a></li>
+                    <li><a href="http://www.tbn.org.tw/RecordProvided/RecordAdd#">新增生物紀錄</a></li>
+                </ul>
+            </div>
+            <!--常態性內容-->
+<form action="http://www.tbn.org.tw/RecordProvided/RecordAdd" class="pure-form" method="post" novalidate="novalidate"><input data-val="true" data-val-number="The field ThemePK must be a number." id="m_Survey_ThemePK" name="m_Survey.ThemePK" type="hidden" value="-1">                <div class="pure-g" style="max-width: 894px;">
+                    <!--所屬主題狀態-->
+                    <!-- 儲存案鈕 -->
+                    <div class="pure-u-1-1" style="text-align: right;">
+                        <input type="submit" value="儲存" class="pure-button pure-button-primary">
+                    </div>
+                    <!-- 文字描述  -->
+                    <div class="pure-u-1-1 pure-u-lg-1-3">
+                        <span class="title_survay">文字描述</span>
+                        <label for="">
+                            標題</label><br>
+                        <input class="required" id="m_Survey_Title" maxlength="40" name="m_Survey.Title" size="10" type="text" value="" aria-required="true"><br>
+                        <br>
+                        <label for="">
+                            描述</label><br>
+                        <textarea class="required" cols="20" id="m_Survey_SurveyContent" name="m_Survey.SurveyContent" rows="2" aria-required="true"></textarea>
+                    </div>
+                    <!-- 照片上傳 -->
+                    <div id="araePhoto" class="pure-u-1-1 pure-u-lg-2-3">
+                        <span class="title_survay">上傳照片</span>
+                        <!-- 檔案上傳 iFrame 設定 -->
+                        <iframe id="ifmFile" src="./新增生物記錄_files/FileUpload.html" style="width:100%; height:205px">
+                        </iframe>
+                        <div id="divHiddenFile" style="display: none;">
+                        </div>
+                        <br>
+                        <br>
+                        或是
+                        <input type="button" value="選擇暫存區檔案" class="pure-button" onclick="showPhotoUploadSelect()">
+                        <table style="width: 100%" id="UploadPhotos">
+                        </table>
+                        <br>
+                        <p class="note">
+                            ※同一筆紀錄，最多可上傳5張照片，檔案大小上限70MB。</p>
+                        <br>
+                        <img src="./新增生物記錄_files/icon_by.jpg">
+                        <p class="note">
+                            本次資料上傳採用「著作權：姓名標示」，若您想了解更多有關創用授權 (CC) 請點擊<a href="http://creativecommons.org.tw/" target="_blank">這裡</a></p>
+                    </div>
+                    <!-- 分隔線 -->
+                    <div class="pure-u-1-1">
+                        <hr style="border: 1px solid #759400; margin-top: 15px; width: 92%;">
+                    </div>
+                    <!-- 左邊 -->
+                    <div class="pure-u-1-1 pure-u-lg-1-2">
+                        <div class="pure-g">
+                            <div class="pure-u-1-1">
+                                <span class="title_survay">調查時間<input type="button" style="margin-left: 1em; font-weight: normal;
+                            font-family: 新細明體;" value="載入照片拍攝資訊" class="pure-button pure-button-primary" onclick="getImagefileName()"></span>
+                                <label>
+                                    日期</label><br>
+                                <label for=""><select id="ConfigCondition_ConditionResult01" name="ConfigCondition.ConditionResult01"><option value="2006">2006</option>
+<option value="2007">2007</option>
+<option value="2008">2008</option>
+<option value="2009">2009</option>
+<option value="2010">2010</option>
+<option value="2011">2011</option>
+<option value="2012">2012</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+<option selected="selected" value="2016">2016</option>
+</select>年</label>
+                                <label for=""><select id="ConfigCondition_ConditionResult02" name="ConfigCondition.ConditionResult02"><option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option selected="selected" value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+</select>月</label>
+                                <label for=""><select id="ConfigCondition_ConditionResult03" name="ConfigCondition.ConditionResult03"><option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option selected="selected" value="29">29</option>
+<option value="30">30</option>
+<option value="31">31</option>
+</select>日</label>
+                                <br>
+                                <br>
+                                <input type="radio" checked="checked" name="TimeType" value="0">
+                                <label for="">
+                                    時段</label>
+                                <select id="ConfigCondition_ConditionResult04" name="ConfigCondition.ConditionResult04"><option value="4">早上：04:00 - 11:00</option>
+<option value="11">中午：11:00 - 13:00</option>
+<option value="13">下午：13:00 - 18:00</option>
+<option value="18">晚上：18:00 - 00:00</option>
+<option value="0">凌晨：00:00 - 04:00</option>
+</select>
+                                <br>
+                                <br>
+                                <input type="radio" name="TimeType" value="1">
+                                <label for="">
+                                    開始時間</label>
+                                <label for=""><select id="ConfigCondition_ConditionResult05" name="ConfigCondition.ConditionResult05"><option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+</select>時</label>
+                                <label for=""><select id="ConfigCondition_ConditionResult06" name="ConfigCondition.ConditionResult06"><option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option value="29">29</option>
+<option value="30">30</option>
+<option value="31">31</option>
+<option value="32">32</option>
+<option value="33">33</option>
+<option value="34">34</option>
+<option value="35">35</option>
+<option value="36">36</option>
+<option value="37">37</option>
+<option value="38">38</option>
+<option value="39">39</option>
+<option value="40">40</option>
+<option value="41">41</option>
+<option value="42">42</option>
+<option value="43">43</option>
+<option value="44">44</option>
+<option value="45">45</option>
+<option value="46">46</option>
+<option value="47">47</option>
+<option value="48">48</option>
+<option value="49">49</option>
+<option value="50">50</option>
+<option value="51">51</option>
+<option value="52">52</option>
+<option value="53">53</option>
+<option value="54">54</option>
+<option value="55">55</option>
+<option value="56">56</option>
+<option value="57">57</option>
+<option value="58">58</option>
+<option value="59">59</option>
+</select>分</label>
+                                <br>
+                                <label for="" style="margin-left: 18px;">
+                                    結束時間</label>
+                                <label for=""><select id="ConfigCondition_ConditionResult07" name="ConfigCondition.ConditionResult07"><option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+</select>時</label>
+                                <label for=""><select id="ConfigCondition_ConditionResult08" name="ConfigCondition.ConditionResult08"><option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option value="29">29</option>
+<option value="30">30</option>
+<option value="31">31</option>
+<option value="32">32</option>
+<option value="33">33</option>
+<option value="34">34</option>
+<option value="35">35</option>
+<option value="36">36</option>
+<option value="37">37</option>
+<option value="38">38</option>
+<option value="39">39</option>
+<option value="40">40</option>
+<option value="41">41</option>
+<option value="42">42</option>
+<option value="43">43</option>
+<option value="44">44</option>
+<option value="45">45</option>
+<option value="46">46</option>
+<option value="47">47</option>
+<option value="48">48</option>
+<option value="49">49</option>
+<option value="50">50</option>
+<option value="51">51</option>
+<option value="52">52</option>
+<option value="53">53</option>
+<option value="54">54</option>
+<option value="55">55</option>
+<option value="56">56</option>
+<option value="57">57</option>
+<option value="58">58</option>
+<option value="59">59</option>
+</select>分</label>
+                            </div>
+                            <div class="pure-u-1-1">
+                                <span class="title_survay">物種名稱</span>
+                                <input type="button" value="依物種名錄查詢" class="pure-button green-button" onclick="ViewSpeciesList(-1)">
+                                <input type="button" value="依物種名稱查詢" class="btnExpandAllId pure-button blue-button" onclick="showSpeciesSearch(-1)">
+                                <br>
+                                <br>
+                                <label for="">
+                                    物種學名 <input id="SpEName" maxlength="250" name="m_Survey.SpEName" readonly="readonly" size="15" type="text" value="" class="ui-autocomplete-input" autocomplete="off"></label>
+                                <br>
+                                <label for="">
+                                    中文名稱 <input id="SpCName" maxlength="250" name="m_Survey.SpCName" readonly="readonly" size="15" type="text" value="" class="ui-autocomplete-input" autocomplete="off"></label>
+                                <br>
+                                <br>
+                                <label for="">
+                                    <input type="checkbox" id="identify">
+                                    <b>幫我辨識此生物</b></label>
+                                <input id="IsIdentify" name="m_Survey.IsIdentify" type="hidden" value="">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 右邊 -->
+                    <div class="pure-u-1-1 pure-u-lg-1-2">
+                        <span class="title_survay">地理位置</span>
+                        <label for="">
+                            地點描述：</label>
+                        <input id="m_Survey_Addr" name="m_Survey.Addr" size="25" type="text" value="">
+                        <br>
+                        <br>
+                        <label for="">
+                            請輸入位置或地址：</label>
+                        <input type="text" id="txtAddress" size="14">
+                        <input id="btnGetAddress" type="button" class="pure-button" value="查詢">
+                        <br>
+                        <br>
+                        <label for="">
+                            經度：</label>
+                        <input class="required" data-val="true" data-val-number="The field Lon must be a number." data-val-required="The Lon field is required." id="txtLon" name="m_Survey.Lon" readonly="readonly" size="10" type="text" value="0" aria-required="true">
+                        <label for="">
+                            緯度：</label>
+                        <input class="required" data-val="true" data-val-number="The field Lat must be a number." data-val-required="The Lat field is required." id="txtLat" name="m_Survey.Lat" readonly="readonly" size="10" type="text" value="0" aria-required="true">
+                        <br>
+                        <br>
+                        <div id="map_canvas" style="overflow: hidden;">
+                        <div class="hpack" style="position: relative; overflow: hidden; width: 447px; height: 400px; border: 0px; left: 0px; top: 0px;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 0;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 0; background: rgb(165, 191, 221);"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"><img src="./新增生物記錄_files/GetCacheImage" alt="" style="border: 0px none; position: absolute; left: -36px; top: 240px; width: 256px; height: 256px;"><img src="./新增生物記錄_files/GetCacheImage(1)" alt="" style="border: 0px none; position: absolute; left: 220px; top: 240px; width: 256px; height: 256px;"><img src="./新增生物記錄_files/GetCacheImage(2)" alt="" style="border: 0px none; position: absolute; left: -36px; top: -16px; width: 256px; height: 256px;"><img src="./新增生物記錄_files/GetCacheImage(3)" alt="" style="border: 0px none; position: absolute; left: 220px; top: -16px; width: 256px; height: 256px;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%;"></div></div><div class="tgoverlayview" style="position: absolute; width: 100%; height: 100%;"></div><div class="tgshadow" style="position: absolute; width: 100%; height: 100%;"><svg height="400" version="1.1" width="447" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.125px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs></svg></div><div class="tgoverlay" style="position: absolute; width: 100%; height: 100%;"><svg height="400" version="1.1" width="447" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.125px;" fill-rule="evenodd" pointer-events="all"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><rect x="0" y="0" width="300" height="300" rx="0" ry="0" fill="none" stroke="#000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></rect></svg></div></div></div><div style="position: absolute; right: 0px; bottom: 0px; width: 11px; height: 11px; display: none; background-color: rgb(173, 216, 230); margin: 5px; border: 0px; z-index: 10000000;"><div style="position: absolute; right: 0px; bottom: 0px; width: 11px; height: 11px; overflow: hidden;"><div style="position: absolute; overflow: hidden; right: 0px; bottom: 0px; width: 150px; height: 150px;"><div style="position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 0;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 0;"></div><div style="position: absolute; overflow: hidden; width: 27.9375px; height: 25px; left: -13.9688px; top: -12.5px; border: 1px inset rgb(3, 0, 250);"><div style="opacity: 0.35; background-color: rgb(94, 56, 255); width: 100%; height: 100%;"></div></div></div></div><img alt="Open" src="./新增生物記錄_files/ShowOpen.gif" style="position: absolute; right: 0px; bottom: 0px; cursor: pointer;"></div></div><div style="width: 250px; height: 20px; position: absolute; right: auto; left: 0px; top: auto; bottom: 0px;"><div style="position: absolute; font-family: calibri, 微軟正黑體; font-weight: 900; left: 5px;">TGOS MAP © 2016 內政部,交通部</div></div><div class="tgMapTypeCtrl" style="position: absolute; padding: 5px; width: 70px; height: 70px; left: auto; right: 0px; bottom: auto; top: 0px; display: inline;"><div style="position: absolute; overflow: hidden; display: inline;"><table border="0" style="border-spacing: 0px;"><tbody><tr><td width="70px" height="70px" style="padding: 0px; background-repeat: no-repeat; cursor: pointer; display: none;"><img src="./新增生物記錄_files/IMAGENLSC_n.png"></td><td width="70px" height="70px" style="padding: 0px; background-repeat: no-repeat; cursor: pointer; display: none;"><img src="./新增生物記錄_files/HILLSHADE_n.png"></td><td width="70px" height="70px" style="padding: 0px; background-repeat: no-repeat; cursor: pointer; display: none;"><img src="./新增生物記錄_files/HILLSHADEMIX_n.png"></td><td width="70px" height="70px" style="padding: 0px; background-repeat: no-repeat; cursor: pointer; display: none;"><img src="./新增生物記錄_files/ROADMAP_n.png"></td><td width="70px" height="70px" style="padding: 0px; background-repeat: no-repeat; cursor: pointer; display: none;"><img src="./新增生物記錄_files/F2IMAGE_n.png"></td><td width="70px" height="70px" style="padding: 0px; background-repeat: no-repeat; cursor: pointer; display: none;"><img src="./新增生物記錄_files/NLSCMAP_n.png"></td><td width="70px" height="70px" style="padding: 0px; background-repeat: no-repeat; cursor: pointer; display: table-cell;"><img src="./新增生物記錄_files/TGOSMAP_d.png"></td></tr></tbody></table></div><div style="position: absolute; right: 0px; background-color: rgb(204, 204, 221); border-style: solid; border-color: rgb(136, 136, 136); font-family: &quot;Times New Roman&quot;, 微軟正黑體; display: none;"><div style="margin: 5px;">地圖類型</div><select style="margin: 0px 5px 5px;"><option value="TGOSMAP">TGOSMAP</option><option value="NLSCMAP">通用版電子地圖</option><option value="F2IMAGE">福衛二號衛星影像</option><option value="ROADMAP">福衛混合地圖</option><option value="HILLSHADEMIX">地形暈渲混合地圖</option><option value="HILLSHADE">地形暈渲圖</option><option value="IMAGENLSC">航照圖</option></select></div></div><table border="0" cellpadding="0" cellspacing="0" id="pLevelBarBar" style="position: absolute; padding-left: 20px; bottom: auto; right: auto; left: 0px; top: 184px;"><tbody><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" width="34"><tbody><tr><td style="padding: 0px 4px 0px 0px;"><img src="./新增生物記錄_files/bar_head.png" style="cursor: pointer; vertical-align: top;"></td></tr></tbody></table></td></tr><tr><td align="center"><table border="0" cellpadding="0" cellspacing="0" width="34"><tbody><tr><td align="center" style="height: 320px; display: none;"><div style="position: relative; width: 12px; height: 100%; display: none;"><img src="./新增生物記錄_files/bar_06.png" width="34" height="16" style="position: absolute; left: 0px; bottom: 128px; display: none;"></div></td></tr><tr><td align="center" style="padding: 0px 4px 0px 0px;"><img src="./新增生物記錄_files/bar_bottom.png" style="cursor: pointer;"></td></tr></tbody></table></td></tr></tbody></table><div style="overflow: visible; padding: 10px; position: absolute; top: auto; right: auto; left: 0px; bottom: 20px;"><div style="position: relative; display: none;"></div><div id="pScaleBar" style="position: relative; height: 36px; overflow: hidden; display: block; width: 166px;"><div style="position: absolute; width: 4px; height: 32px; overflow: hidden;"><img src="./新增生物記錄_files/scale.png" style="position: absolute; left: 0px; top: 0px;"></div><div style="position: absolute; width: 508px; height: 4px; overflow: hidden; left: 4px; top: 14px;"><img src="./新增生物記錄_files/scale.png" style="position: absolute; left: -4px; top: -14px;"></div><div style="position: absolute; width: 4px; height: 15px; overflow: hidden; left: 162px; top: 0px;"><img src="./新增生物記錄_files/scale.png" style="position: absolute; left: 0px; top: 0px;"></div><div style="position: absolute; width: 4px; height: 15px; overflow: hidden; left: 130px; top: 17px;"><img src="./新增生物記錄_files/scale.png" style="position: absolute; left: 0px; top: -17px;"></div><div style="position: absolute; width: 1px; height: 4px; overflow: hidden; right: 0px; top: 14px;"><img src="./新增生物記錄_files/scale.png" style="position: absolute; left: -511px; top: -14px;"></div><div class="text" style="font-size: 0.7em; position: absolute; left: 25px; top: 18px;">50英里</div><div class="text" style="font-size: 0.7em; position: absolute; left: 25px; top: 0px;">100公里</div></div></div></div></div>
+                        <input id="hidDowntown" name="sDowntown" type="hidden" value="">
+                        <input id="hidCity" name="sCity" type="hidden" value="">
+                        <!--input type="button" value="測試" onclick="GetLatLanCity()" /-->
+                    </div>
+                    <div class="pure-u-1-1" style="text-align: right; margin-top: 10px;">
+                        <input type="submit" value="儲存" class="pure-button pure-button-primary">
+                    </div>
+                </div>
+</form>        </div>
+    </div>
+</div>
+
+        </div>
+
+
+
+    
+    <script type="text/javascript">
+    function showMsg(displayText) {
+//        $('#divMsgContainer').attr('style', 'position:absolute; z-index:9999; width:380px; top:35%; left:35%; display:block;').delay(4000).fadeOut(1000).draggable();
+//        $('#divMsgContainer label').html(displayText);
+
+        swal(displayText);
+    }
+
+    function showMsg_NoTime(displayText) {
+//        $('#divMsgContainer').attr('style', 'position:absolute; z-index:9999; width:380px; top:35%; left:35%; display:block;').delay(4000).draggable();
+//        $('#divMsgContainer label').html(displayText);
+
+        swal(displayText);
+    }
+    function showSuccessMsg(displayText) {
+        swal({
+            title: "成功",
+            text: displayText,
+            type: "success"
+        },
+        function () {
+            $.blockUI({ message: '<h1>請稍候...</h1>' });
+            window.location.reload();
+        });
+    }
+
+    function showErrorMsg(displayText) {
+        swal({
+            title: "失敗",
+            text: displayText,
+            type: "error"
+        },
+        function () {
+            $.blockUI({ message: '<h1>請稍候...</h1>' });
+            window.location.reload();
+        });
+    }
+
+    function MsgFunc(msg, msgType) {
+        swal({ title: msg,
+            text: "",
+            timer: 3000,
+            showConfirmButton: true,
+            closeOnConfirm: true,
+            type: msgType
+        }
+            );
+    }
+    </script>
+</div>
+
+
+<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none;"></ul><span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-2" tabindex="0" style="display: none;"></ul><span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span></body></html>

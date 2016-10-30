@@ -1,0 +1,204 @@
+﻿body
+{
+    font-size: 14px;
+    font-family: "Helvetica Neue", Helvetica, Arial, "微軟正黑體", sans-serif;
+    /*background:url('../images/bg_b.gif');*/
+}
+
+/* === 水平對齊 === */
+.alignRight
+{
+    text-align: right;
+}
+
+.alignLeft
+{
+    text-align: left;
+}
+
+.alignCenter
+{
+    text-align: center;
+}
+
+/* === 輸入框長度 === */
+.inputShort
+{
+    width: 30px;
+}
+
+.inputMiddle
+{
+    width: 120px;
+}
+
+.inputLong
+{
+    width: 280px;
+}
+
+/* === 文字屬性 === */
+.textRed
+{
+    color: Red;
+}
+
+.textBlue
+{
+    color: Blue;
+}
+
+.textWhite
+{
+    color: White;
+}
+
+.textBold
+{
+    font-weight: bold;
+}
+
+.textItalic
+{
+    font-style: italic;
+}
+
+/* === 文字大小 === */
+.textSmall
+{
+    font-size: 10px;
+}
+
+.textMedium
+{
+    font-size: 12px;
+}
+
+.textBig
+{
+    font-size: 18px;
+}
+
+.functionTitle
+{
+    font-size: 18px;
+    color: Blue;
+}
+
+/* === Table 樣板 === */
+
+/* === Table Style Blue === */
+
+.tbsBlue {border:1px solid #cccccc; width:100%;border-collapse:collapse;}
+.tbsBlue caption{ background-color:#efefef;line-height:28px;font-size:14px;}
+.tbsBlue thead th{vertical-align:middle;border:1px solid #cccccc; color:#555555;text-align:center;line-height:28px;font-size:medium;}
+.tbsBlue tbody td{vertical-align:middle;border:1px solid #cccccc; color:#555555;text-align:center;line-height:28px;}
+.tbsBlue thead tr{ background-color:#0066cc;}
+.tbsBlue thead tr th{ color:#ffffff; text-align:center;}
+.tbsBlue tbody tr:nth-child(odd){background-color:#ffffff;}
+.tbsBlue tbody tr:nth-child(even){ background-color:#efefef;}
+.tbsBlue tbody tr:nth-child(odd) td{vertical-align:middle;background-color:#ffffff;}
+.tbsBlue tbody tr:nth-child(even) td{ vertical-align:middle;background-color:#efefef;}
+
+/* === Table Style Orange === */
+.tbsOrange {border:1px solid #cccccc; width:100%;border-collapse:collapse;}
+.tbsOrange thead tr th{border:1px solid #cccccc; color:#555555;text-align:center;line-height:28px;}
+.tbsOrange tbody tr td{vertical-align:middle;border:1px solid #cccccc; color:#555555;text-align:center;line-height:28px;}
+.tbsOrange thead tr{ background-color:#EE9A49;}
+.tbsOrange thead tr th{ color:#ffffff; text-align:center;}
+.tbsOrange tbody tr:nth-child(odd){background-color:#ffffff;}
+.tbsOrange tbody tr:nth-child(even){ background-color:#FDF5E6;}
+.tbsOrange tbody tr:nth-child(odd) td{vertical-align:middle;background-color:#ffffff;}
+.tbsOrange tbody tr:nth-child(even) td{ vertical-align:middle;background-color:#FDF5E6;}
+
+/* === Tabled-Form 樣板 === */
+
+/* === Table Form Blue === */
+.tbFormBlue{border:3px solid #97CBFF; width:100%;border-collapse:collapse;}
+.tbFormBlue caption {background-color:#efefef;line-height:28px;font-size:medium; font-family:Helvetica Neue;}
+.tbFormBlue th {border-bottom:1px solid #97CBFF; }
+.tbFormBlue td {border-bottom:1px solid #97CBFF; }
+.tbFormBlue tbody th {border-bottom:2px solid #ffffff;border-right:2px solid #ffffff; color:#555555;text-align:right;line-height:28px; background-color:#ACD6FF;padding:5px;}
+.tbFormBlue tbody td {border-bottom:2px solid #ffffff; color:#8B8989;text-align:left;line-height:28px; background-color:#C4E1FF;padding:5px;}
+
+/* === Table Form Orange === */
+.tbFormOrange{border:3px solid #FFAF60; width:100%;border-collapse:collapse;}
+.tbFormOrange caption {background-color:#efefef;line-height:28px;font-size:medium; font-family:Helvetica Neue;}
+.tbFormOrange th {border-bottom:1px solid #97CBFF; }
+.tbFormOrange td {border-bottom:1px solid #97CBFF; }
+.tbFormOrange tbody th {border-bottom:2px solid #ffffff;border-right:2px solid #ffffff; color:#555555;text-align:right;line-height:28px; background-color:#FFD1A4;padding:5px;}
+.tbFormOrange tbody td {border-bottom:2px solid #ffffff; color:#8B8989;text-align:left;line-height:28px; background-color:#FFDCB9;padding:5px;}
+
+/* === Table Form Dark-Blue === */
+.tbFormDarkBlue{border:3px solid #cccccc; width:100%;border-collapse:collapse;}
+.tbFormDarkBlue caption {background-color:#efefef;line-height:28px;font-size:medium; font-family:Helvetica Neue;}
+.tbFormDarkBlue th {border-bottom:1px solid #97CBFF; border-right:2px solid #ffffff;}
+.tbFormDarkBlue td {border-bottom:1px solid #97CBFF; border-right:2px solid #ffffff;}
+.tbFormDarkBlue thead th {border-right:2px solid #efefef;font-size:medium;text-align:center;}
+.tbFormDarkBlue tbody th {border-bottom:2px solid #ffffff;border-right:2px solid #ffffff; color:#fff;text-align:right;line-height:28px; background-color:#136cb6;padding:5px;font-size:medium;}
+.tbFormDarkBlue tbody td {border-bottom:2px solid #ffffff; color:#000;text-align:left;line-height:28px; background-color:#efefef;padding:5px;}
+
+/* === Table Form Dark-Orange === */
+.tbFormDarkOrange{border:3px solid #FFAF60; width:100%;border-collapse:collapse;}
+.tbFormDarkOrange caption {background-color:#efefef;line-height:28px;font-size:medium; font-family:Helvetica Neue;}
+.tbFormDarkOrange th {border-bottom:1px solid #97CBFF; }
+.tbFormDarkOrange td {border-bottom:1px solid #97CBFF; }
+.tbFormDarkOrange tbody th {border-bottom:2px solid #ffffff;border-right:2px solid #ffffff; color:#fff;text-align:right;line-height:28px; background-color:#f98d00;padding:5px;}
+.tbFormDarkOrange tbody td {border-bottom:2px solid #ffffff; color:#000;text-align:left;line-height:28px; background-color:#FFEEDD;padding:5px;}
+
+.tbInfoFormDarkBlue{border:3px solid #cccccc; width:100%; border-collapse:collapse;}
+.tbInfoFormDarkBlue caption {background-color:#efefef;line-height:28px;font-size:medium; font-family:Helvetica Neue;}
+.tbInfoFormDarkBlue td {border-bottom:1px solid #97CBFF; }
+.tbInfoFormDarkBlue thead th{border:1px solid #cccccc; color:#555555;text-align:center;line-height:28px;}
+.tbInfoFormDarkBlue tbody th {border-bottom:2px solid #ffffff;border-right:2px solid #ffffff; color:#fff;text-align:left;line-height:28px; background-color:#136cb6;padding:5px; text-align:right;font-size:medium;}
+.tbInfoFormDarkBlue tbody td {border-bottom:2px solid #ffffff; color:#000;text-align:left;line-height:28px; background-color:#efefef;padding:5px;}
+
+/* === Table Form Dark-Blue for Std Information View === */
+.tbStdViewInfoFormDarkBlue{border:1px solid #000000; width:100%;border-collapse:collapse; width:85%;}
+.tbStdViewInfoFormDarkBlue caption {background-color:#efefef;line-height:28px;font-size:medium; font-family:Helvetica Neue;}
+.tbStdViewInfoFormDarkBlue thead th{background:#DCDCDC; color:#555555;text-align:center;line-height:28px;}
+.tbStdViewInfoFormDarkBlue tbody th {background-color:#136cb6; color:#fff;text-align:left;line-height:28px; padding:5px;}
+.tbStdViewInfoFormDarkBlue tbody td {background-color:#F5F5F5; color:#000;text-align:left;line-height:28px; padding:5px;}
+
+.imgStyle{width:5%; height:12%;}
+
+
+/************ table01 ************/
+
+.table01 {
+                width: 100%;
+                border-collapse: collapse;
+                }
+                
+.table01 thead th {
+                font-weight: bold;
+                font-size: 15px;
+                border-bottom: 1px solid #ddd;
+				text-align:left;
+                }
+                
+.table01 tbody {
+                border-bottom: 1px solid #ddd;
+                }
+                
+.table01 tbody tr {
+                background: #fff;
+                }
+                
+.table01 table td,
+.table01 table th {
+                padding: 10px;
+                line-height: 1.3em;
+                }        
+				
+.table01 table tfoot td .bulk-actions {
+                padding: 15px 0 5px 0;
+                } 
+				
+.table01 tfoot td .bulk-actions select {
+                padding: 4px;
+				border: 1px solid #ccc;
+                }      
+.table01 tbody tr:hover{background-color:#D9EAFD;cursor:pointer;}
+.table01 tr:nth-child(even) {background: #f3f3f3;}
+.table01 tr:nth-child(odd) {background: #fff;}
