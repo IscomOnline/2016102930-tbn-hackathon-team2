@@ -1,0 +1,93 @@
+﻿//按鈕 : 開啟檢視物種名錄
+////////===========Pid為新增主題討論區流程使用，擴增原流程========
+function ViewSpeciesList(Pid) {
+    //初始化Pid
+    Pid = typeof Pid !== 'undefined' ? Pid : -1;
+    //儲存目標儲存欄位DOM
+    if (Pid != -1) {
+        var SubWindow = window.open("/RecordProvided/Taxonomy?ThemePK=" + Pid, "SubWindow", "width=800, height=600, menubar=no, resizeable=no, toolbar=no");
+    }
+    else {
+        var SubWindow = window.open("/RecordProvided/Taxonomy/", "SubWindow", "width=800, height=600, menubar=no, resizeable=no, toolbar=no");
+    }
+}
+////////===========end========
+
+//This function is called by the pop up window
+function setSearchResult(returnCN, returnEN) {
+    $("#SpCName").val(returnCN);
+    $("#SpEName").val(returnEN);
+
+    //$("#m_Survey_ThemePK").val(-1);討論區紀錄修正時候原
+    $("#selectTheme").val("");
+}
+
+//自動完成
+function log(message) {
+    $("#SpCName").val(message).prependTo("#log");
+    $("#log").scrollTop(0);
+}
+function log2(message) {
+    $("#SpEName").val(message).prependTo("#log");
+    $("#log").scrollTop(0);
+}
+var winShowSpeciesSearch = false;
+
+////////===========Pid為新增主題討論區流程使用，擴增原流程========
+function showSpeciesSearch(Pid) {
+    //初始化Pid
+    Pid = typeof Pid !== 'undefined' ? Pid : -1;
+
+    var name = "";
+    if ($("#SpEName").val() != "") {
+        name = $("#SpEName").val();
+    }
+    else {
+        name = $("#SpCName").val();
+    }
+
+    if (winShowSpeciesSearch && !winShowSpeciesSearch.closed) {  //checks to see if window is open  
+        winShowSpeciesSearch.focus();
+    }
+    else {
+        if (Pid != -1) {
+            winShowSpeciesSearch = window.open('/RecordProvided/SelectSpeciesSearch?ThemePK='+Pid+'&name=' + name, 'SpeciesSearch', 'scrollbars=1,width=900,height=600');
+        }
+        else {
+            winShowSpeciesSearch = window.open('/RecordProvided/SelectSpeciesSearch?name=' + name, 'SpeciesSearch', 'scrollbars=1,width=900,height=600');
+        }
+    }
+}
+////////===========end========
+
+
+var winShowshowPhotoUploadSelect = false;
+function showPhotoUploadSelect() {
+    if (winShowshowPhotoUploadSelect && !winShowshowPhotoUploadSelect.closed) {  //checks to see if window is open  
+        winShowshowPhotoUploadSelect.focus();
+    }
+    else {
+        winShowshowPhotoUploadSelect = window.open('/RecordProvided/SelectshowPhotoUploadSelect?imageLimit=' + $("#ifmFile").contents().find("#tbFileList tbody tr.template-download.fade.in").length, 'showPhotoUploadSelect', 'scrollbars=1,width=1024,height=800');
+    }
+}
+
+
+function PhotoDelete(obj) {
+    $(obj).parent().parent().remove();
+    $("#ifmFile").get(0).contentWindow.SetFilesLimit($("#UploadPhotos tr").length);
+    $("#ifmFile").contents().find("input[type=file]").prop("disabled", false);
+    $("#ifmFile").contents().find("input[type=file]").parent().prop("class", "btn btn-success fileinput-button");
+}
+// 設定檔案上傳清單
+function SetDataFromIFrame() {
+    $('#ifmFile').contents().find('#tbFileList .template-download').each(function (i, v) {
+        var _aFile = $(this).find("td[class=name] > a");
+        var _hiddenHtml = "<input type=\"hidden\" id=\"m_FileUploadModel_m_lstJqueryFileUploadModel_" + i + "__name\" name=\"m_FileUploadModel.m_lstJqueryFileUploadModel[" + i + "].name\" value=\"" + _aFile.attr("title") + "\" />" +
+            "<input type=\"hidden\" id=\"m_FileUploadModel_m_lstJqueryFileUploadModel_" + i + "__new_name\" name=\"m_FileUploadModel.m_lstJqueryFileUploadModel[" + i + "].new_name\" value=\"" + _aFile.attr("newName") + "\" />";
+        $('#divHiddenFile').append(_hiddenHtml);
+    });
+}
+//限制iframe照片上傳數量
+function callIframeFunction(PhotosCount) {
+    $("#ifmFile").get(0).contentWindow.SetFilesLimit(PhotosCount);
+}

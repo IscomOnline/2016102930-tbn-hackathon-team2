@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+  <!--icon font : http://fontawesome.io/get-started/ Copy the entire font-awesome directory into your project.-->
+  <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <title>TBN-Hackathon X FireAnt</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+  body {
+      font: 400 15px/1.8 Lato, sans-serif;
+      color: #777;
+  }
+  h3, h4 {
+      margin: 10px 0 30px 0;
+      letter-spacing: 10px;      
+      font-size: 20px;
+      color: #111;
+  }
+  .container {
+      padding: 50px 0px;
+  }
+
+  .person {
+      border: 10px solid transparent;
+      margin-bottom: 25px;
+      width: 80%;
+      height: 80%;
+      opacity: 0.7;
+  }
+  .person:hover {
+      border-color: #f1f1f1;
+  }
+  .carousel-inner img {
+      -webkit-filter: grayscale(90%);
+      filter: grayscale(90%); /* make all photos black and white */ 
+      width: 100%; /* Set width to 100% */
+      margin: auto;
+  }
+  .carousel-caption h3 {
+      color: #fff !important;
+  }
+  @media (max-width: 600px) {
+    .carousel-caption {
+      display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+    }
+  }
+  .bg-1 {
+      background: #EF562D;
+      color: #FFFFFF;
+  }
+  .bg-1 h3 {color: #fff;}
+  /*.bg-1 p {font-style: italic;}*/
+
+  .bg-2 {
+    background: #EF562D;
+      /*background: #F1DEA3;*/
+       border: 10px solid transparent;
+       
+ }
+
+
+  .bg-3 {
+       border: 10px solid transparent;
+      background: #F1DEA3;
+
+    }
+ .button3 {
+      width: 100%;
+       
+      
+ }
+
+  .list-group-item:first-child {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+  }
+  .list-group-item:last-child {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+  }
+  .thumbnail {
+      padding: 0 0 15px 0;
+      border: none;
+      border-radius: 0;
+  }
+  .thumbnail p {
+      margin-top: 15px;
+      color: #555;
+  }
+  .btn {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #f1f1f1;
+      border-radius: 0;
+      transition: .2s;
+  }
+  .btn:hover, .btn:focus {
+      border: 1px solid #333;
+      background-color: #fff;
+      color: #000;
+  }
+  .modal-header, h4, .close {
+      background-color: #333;
+      color: #fff !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-header, .modal-body {
+      padding: 40px 50px;
+  }
+  .nav-tabs li a {
+      color: #777;
+  }
+  #googleMap {
+      width: 100%;
+      height: 400px;
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+  }  
+  .navbar {
+      font-family: Montserrat, sans-serif;
+      margin-bottom: 0;
+      background-color: #2d2d30;
+      border: 0;
+      font-size: 11px !important;
+      letter-spacing: 4px;
+      opacity: 0.9;
+  }
+  .navbar li a, .navbar .navbar-brand { 
+      color: #d5d5d5 !important;
+  }
+  .navbar-nav li a:hover {
+      color: #fff !important;
+  }
+  .navbar-nav li.active a {
+      color: #fff !important;
+      background-color: #29292c !important;
+  }
+  .navbar-default .navbar-toggle {
+      border-color: transparent;
+  }
+  .open .dropdown-toggle {
+      color: #fff;
+      background-color: #555 !important;
+  }
+  .dropdown-menu li a {
+      color: #000 !important;
+  }
+  .dropdown-menu li a:hover {
+      background-color: red !important;
+  }
+  footer {
+      background-color: #2d2d30;
+      color: #f5f5f5;
+      padding: 32px;
+  }
+  footer a {
+      color: #f5f5f5;
+  }
+  footer a:hover {
+      color: #777;
+      text-decoration: none;
+  }  
+  .form-control {
+      border-radius: 0;
+  }
+  textarea {
+      resize: none;
+  }
+  </style>
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#myPage">TBN-Hackathon X FireAnt</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="#myPage">| Introduction |</a></li>
+        <li><a href="#statics">| FireAnt Statics |</a></li>
+        <li><a href="#map">| FireAnt Map |</a></li>
+        <li><a href="#system">| Report System |</a></li>
+
+       
+<!--
+        <li><a href="#contact">| CONTACT |</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Merchandise</a></li>
+            <li><a href="#">Extras</a></li>
+            <li><a href="#">Media</a></li> 
+          </ul>
+        </li>
+        <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+-->        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Container (The Band Section) -->
+<div id="introduction" class="bg-1" >
+
+  <div  class="container">
+    <h3>Introduction</h3>
+    <p><em>Wikipedia:</em></p>
+    <p>The red imported fire ant (Solenopsis invicta), also known as the fire ant or RIFA, is a species of ant native to South America. A member of the genus Solenopsis in the subfamily Myrmicinae, it was described by Swiss entomologist Felix Santschi as a variant in 1916. The name S. invicta was given to the ant in 1972 by American entomologist William Buren who believed that he had described a new species. 
+    </p>
+    <div class="row">
+    
+            <div class="col-md-4">
+            <h2>入侵紅火蟻頭部與口器外觀</h2><p>[Ref:wiki]</p>
+            <img src="images/Solenopsis_invicta_casent0005804_head_1.jpg" alt="" width="100%">
+            </div>
+            
+            <div class="col-md-4"> 
+            <h2>體型有大有小</h2><p>[Ref:農試所]</p>  
+           <img src="images/workant.jpg" alt="" width="100%">
+           </div>
+
+            <div class="col-md-4">
+               <h2>蟻丘像沙子或突起成山丘</h2><p>[Ref:wiki][Ref:TBN,攝影師:Yuling]</p>  
+                <img src="images/RIFA_Raft_After_Heavy_Rain.jpg" alt="" width="100%">
+                
+                <img src="images/8d652e5e-3354-40d1-b21e-5c555c6e7219.JPG" alt="" width="100%">
+                </div>
+
+            
+    </div>
+  </div>
+</div>
+
+<!--PPI Analysis的段落，看分很多段DIV還是都同一段DIV內的小DIV -->
+<div id="statics" class="container">
+
+  <h3>FireAnt Statics</h3>
+
+  <!--搜尋-->
+  <p>1.通報案件逐年增加，2.通報案件沒有明顯月份趨勢</p>
+  <br>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["year", "case", { role: "style" } ],
+        ["2006",1, "#EF562D"],
+["2007",2, "#EF562D"],
+["2008",7, "#EF562D"],
+["2009",39, "#EF562D"],
+["2010",94, "#EF562D"],
+["2011",303, "#EF562D"],
+["2012",338, "#EF562D"],
+["2013",416, "#EF562D"],
+["2014",1173, "#EF562D"],
+["2015",955, "#EF562D"],
+["2016",1418, "#EF562D"]
+
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "FireAnt Report cat by years",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
+  <!--第二張圖的 沒時間修 要注意變數和第一章重複時候圖可能不能畫-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['month', '2011', '2012', '2013', '2014', '2015', '2016'],
+           ['1月',  1,4,60,51,29,197],
+ ['2月',  2,44,1,26,55,249],
+ ['3月',  5,17,44,163,41,158],
+ ['4月',  31,1,25,125,127,206],
+ ['5月',  148,51,71,55,54,504],
+ ['6月',  15,24,35,77,152,63],
+ ['7月',  11,44,16,92,36,41],
+ ['8月',  23,22,5,100,151,0],
+ ['9月',  14,33,30,63,35,0],
+ ['10月',  13,21,16,123,66,0],
+ ['11月',  13,34,33,89,117,0],
+ ['12月',  27,43,80,209,92,0]
+
+        ]);
+
+        var options = {
+          title: 'FireAnt Report cat by months',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+  <div class="row ">
+    
+    <div class="col-md-12">
+      
+    <div id="columnchart_values" style="width:100%; height: 400px;"></div>
+
+    </div>
+    <div class="col-md-12">
+    <div id="curve_chart" style="width: 100%; height: 400px"></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Container (TOUR Section) -->
+<div id="map" >
+  <div class="container">
+    
+    <h3 class="text-center">FireAnt Map</h3>  
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#home">Time Series</a></li>
+      <li><a data-toggle="tab" href="#menu1">Heat</a></li>
+      <li><a data-toggle="tab" href="#menu2">Year Category</a></li>
+      <li><a data-toggle="tab" href="#menu3">Hotspot</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="home" class="tab-pane fade in active">
+         <h3>FireAnt Time Series Map</h3>
+        <iframe width="100%" height="520" frameborder="0" src="https://monster19850408.carto.com/viz/48b5f9de-9d9e-11e6-af2a-0e233c30368f/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+
+      </div>
+      <div id="menu1" class="tab-pane fade">
+                  <h3 >FireAnt Heat Map</h3>
+         <iframe width="100%" height="520" frameborder="0" src="https://monster19850408.carto.com/viz/7677cc6b-6540-4134-9460-956e86c4613c/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+      </div>
+      <div id="menu2" class="tab-pane fade">
+         <h3>FireAnt Year Category Map</h3>
+      <iframe width="100%" height="520" frameborder="0" src="https://monster19850408.carto.com/viz/4f745abe-b9d5-4303-bece-b916213d71f4/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+      </div>
+      <div id="menu3" class="tab-pane fade">
+         <h3 >FireAnt Hotspot Map</h3>        
+       <iframe width="100%" height="520" frameborder="0" src="https://monster19850408.carto.com/viz/e6b768c0-9d94-11e6-b2ed-0e3ff518bd15/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Container (Contact Section) -->
+<div id="system" class="container">
+  <h3 class="text-center">Report System</h3>
+ 
+
+      <div class="row">
+       
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4  bg-2">
+          
+          <h3 class="text-center" >入侵紅火蟻通報系統</h3>
+          <div class="row bg-3">
+            
+            <div>
+            <button data-toggle="collapse" data-target="#demo" class="btn button3" >上傳照片</button>
+            
+            </div>
+             <div id="demo" class="collapse">
+              <form>
+                  <div class="form-group">
+<!--                    <label for="pwd">地點</label>
+                  <input type="password" class="form-control" id="pwd">
+-->
+                   <img src="images/upload.png" alt="" width="100%">
+                  </div>
+          
+                  <button type="submit" class="btn pull-right" >Submit</button>
+              </form>
+            </div>
+            <br>
+             <div>
+            <button  class="btn button3" display: inline>載入照片拍攝資訊</button>
+            <div class="text-center">
+            or
+            </div>
+            <button data-toggle="collapse" data-target="#demo1" class="btn button3" display: inline >手動輸入時間地點</button>
+            </div>
+
+            <div id="demo1" class="collapse">
+              <form>
+                  <div class="form-group">
+<!--                  <label for="email">時間</label>
+                  <input type="email" class="form-control" id="email">
+-->
+                   <img src="images/time.png" alt="" width="100%">
+                  </div>
+
+                  <div class="form-group">
+<!--                    <label for="pwd">地點</label>
+                  <input type="password" class="form-control" id="pwd">
+-->
+                   <img src="images/location.png" alt="" width="100%">
+                  </div>
+          
+                  <button type="submit" class="btn pull-right">Submit</button>
+              </form>
+            </div>
+            
+
+          </div>
+         
+      </div>
+ <div class="col-md-4">
+        </div>
+         <div class="col-md-12">-
+        </div>
+        </div>
+ </div>
+
+
+
+<!-- Footer -->
+<footer class="text-center">
+  <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a><br><br>
+  <p>Bootstrap Theme Made By <a href="http://www.w3schools.com" data-toggle="tooltip" title="Visit w3schools">www.w3schools.com</a></p> 
+</footer>
+
+<script>
+$(document).ready(function(){
+  // Initialize Tooltip
+  $('[data-toggle="tooltip"]').tooltip(); 
+  
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+   
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+})
+</script>
+
+</body>
+</html>

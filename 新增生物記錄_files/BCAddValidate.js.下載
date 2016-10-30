@@ -1,0 +1,79 @@
+﻿$.validator.addMethod(
+    "dateTime",
+    function (value, element) {
+        return this.optional(element) || /^\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2} (20|21|22|23|[01]\d|\d)(([:.][0-5]\d){1,2})$/.test(value);
+    },
+    "請輸入正確日期和時間 例：2012-02-21 14:20"
+);
+
+$.validator.addMethod(
+    "dateTime1",
+    function (value, element) {
+        return this.optional(element) || /^\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}$/.test(value);
+    },
+    "請輸入正確日期 例：2012-02-21"
+);
+    //rexchang 20130716
+    $.validator.addMethod(
+    "dateTime2",
+    function (value, element) {
+        return this.optional(element) || /^\d{4}[\/\-]\d{1,2}$/.test(value);
+    },
+    "請輸入正確日期 例：2012-02"
+);
+
+    $.validator.addMethod(
+    'OneCheck',
+     function (value, ele) {
+         return $("input.OneCheck:checked").length >= 1;
+     }, '最少請選擇一個項目'
+ );
+
+     $.validator.addMethod(
+    'CheckTel',
+     function (value, element) {
+        return this.optional(element) || /^([0-9]{1,4}\-[0-9]{6,8})?$/.test(value);
+    }, '<br>範例：04-12345678或0921-999999'
+ );
+
+ //Noodle
+    $.validator.addMethod(
+    'CheckEnglish',
+     function (value, element) {
+         return this.optional(element) || /^[a-zA-Z\s]*$/.test(value);
+     }, '<br>範例：abc 或 ABC'
+ );
+//rexchang 20130716
+     $.validator.addMethod(
+    'BCAdigits',
+     function (value, element) {
+          
+         return this.optional(element) || /^\d+$/.test(value);
+     }, '<br>範例：0~9，此欄位限制輸入數字'
+ );
+     //rexchang 20130827
+     $.validator.addMethod(
+    'BCAdigits2',
+     function (value, element) {
+
+         return this.optional(element) || /[+-]?\d+$/.test(value);
+     }, '<br>範例：0~9，此欄位限制輸入數字可輸入負值'
+ );
+     //rexchang 20130903
+     $.validator.addMethod(
+    'BCAdigits3',
+     function (value, element) {
+
+         return this.optional(element) || /^\d+[.]?[1-9]?$/.test(value);
+     }, '<br>範例：此欄位限制輸入整數及浮點數'
+ );
+
+     $.validator.addMethod(
+    'EngAndNum_36',
+     function (value, element) {
+
+         return this.optional(element) || /^.[A-Za-z0-9]{2,5}$/.test(value);
+     }, '請輸入英文或數字(最少3碼，最長6碼)'
+ );
+   
+    

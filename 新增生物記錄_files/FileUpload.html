@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)http://www.tbn.org.tw/FileUpload?functionName=UploadTemp -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Index</title>
+        <!-- Bootstrap CSS -->
+        <link href="./bootstrap.min(1).css" rel="stylesheet" type="text/css">    
+        <link href="./bootstrap-responsive.min.css" rel="stylesheet" type="text/css">    
+        <link href="./bootstrap-image-gallery.min.css" rel="stylesheet" type="text/css">
+        <!-- jQuery File Upload CSS -->
+        <link href="./jquery.fileupload-ui.css" rel="stylesheet" type="text/css">
+        <!-- jQuery JS -->
+        <script src="./jquery.min.js(1).下載"></script>
+        <script src="./jquery-ui.min.js(1).下載"></script>
+        <!-- JavaScript Load Image Plugin -->
+        <script src="./load-image.min.js.下載" type="text/javascript"></script>    
+        <!-- JavaScript Canvas to Blob Plugin -->
+        <script src="./canvas-to-blob.min.js.下載" type="text/javascript"></script>
+        <!-- JavaScript Templates -->
+        <script src="./tmpl.min.js.下載" type="text/javascript"></script>    
+        <!-- 2013/09/03 16:36 因為 IE9 以上會有問題，所以拿掉 -->
+        <!-- Bootstrap JS -->
+        <!-- jQuery File Upload Plugin -->
+        <script src="./jquery.fileupload.js.下載" type="text/javascript"></script>    
+        <!-- jQuery iFrame Plugin -->
+        <script src="./jquery.iframe-transport.js.下載" type="text/javascript"></script>    
+        <script src="./jquery.fileupload-ip.js.下載" type="text/javascript"></script>    
+        <script src="./jquery.fileupload-ui.js.下載" type="text/javascript"></script>
+        <script src="./locale.js.下載" type="text/javascript"></script>    
+        <script src="./main.js.下載" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        $().ready(function () {
+            SetFilesLimit(0);
+        });
+
+        // 重設檔案上傳 iFrame 高度
+        function ResetHeight() {
+            var _rows = $('#tbFileList tr').length;
+            var _height = _rows * 50 + 150;
+            window.parent.$('#ifmFile').attr('height', _height + 'px');
+        }
+
+        //限制上傳五張圖片
+        function SetFilesLimit(Count) {
+            var nowCount = $("#tbFileList tbody tr.template-download.fade.in").length;
+            var limitCount = parseInt(5 - Count - nowCount);
+            limitCount = limitCount < 0 ? 0 : limitCount;
+
+            $('#fileupload').fileupload('option', {
+                maxNumberOfFiles: limitCount
+            });
+        }
+    </script>
+    <!-- Shim to make HTML5 elements usable in older Internet Explorer versions -->
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!-- The template to display files available for upload -->
+    <script id="template-upload" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload fade">
+            
+            <td class="name" style="max-width:80px"><span>{%=file.name%}</span></td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            {% if (file.error) { %}
+                <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+            {% } else if (o.files.valid && !i) { %}
+                <td>
+                    <div class="progress progress-success progress-striped active"><div class="bar" style="width:0%;"></div></div>
+                </td>
+                <td class="start">{% if (!o.options.autoUpload) { %}
+                    <button class="btn btn-primary">
+                        <i class="icon-upload icon-white"></i>
+                        <span>上傳</span>
+                    </button>
+                {% } %}</td>
+            {% } else { %}
+                <td colspan="2"></td>
+            {% } %}
+            <td class="cancel">{% if (!i) { %}
+                <button class="btn btn-warning">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>取消</span>
+                </button>
+            {% } %}</td>
+        </tr>
+    {% } %}
+    </script>
+    <!-- The template to display files available for download -->
+    <script id="template-download" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-download fade">
+            {% if (file.error) { %}
+                <td></td>
+                <td class="name"><span>{%=file.name%}</span></td>
+                <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+                <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+            {% } else { %}
+                
+                 <td style="max-width:80px">
+                     <span class="preview">
+                             <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%='../../Public/' + $('#m_FunctionName').val() + '/' + $('#PID').val() + '/S/' + file.new_name%}"></a>
+                     </span>
+                 </td>
+                <td class="name" style="max-width:200px">
+                    <a href="{%=file.url%}" newName="{%= file.new_name%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
+                </td>
+                
+                <td></td>
+            {% } %}
+            <td class="delete">
+                <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
+                    <i class="icon-trash icon-white"></i>
+                    <span>刪除</span>
+                </button>
+                <input type="checkbox" name="delete" value="1">
+            </td>
+        </tr>
+    {% } %}
+    </script>
+</head>
+<body>
+    <form id="fileupload" action="http://www.tbn.org.tw/FileUpload/UploadFiles" method="POST" enctype="multipart/form-data">
+    
+    <input data-val="true" data-val-number="The field PID must be a number." data-val-required="The PID field is required." id="PID" name="PID" type="hidden" value="4551">
+    <input id="m_FunctionName" name="m_FunctionName" type="hidden" value="UploadTemp">
+    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+    <div class="row fileupload-buttonbar">
+        <div class="span7" style="width: 502px;">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button"><i class="icon-plus icon-white"></i><span>
+                步驟一:加入檔案</span>
+                <input type="file" name="files[]" multiple="">
+            </span>
+            <button class="btn btn-primary start">
+                <i class="icon-upload icon-white"></i><span>步驟二:開始上傳</span>
+            </button>
+            <button type="reset" class="btn btn-warning cancel">
+                <i class="icon-ban-circle icon-white"></i><span>取消上傳</span>
+            </button>
+            <button type="button" class="btn btn-danger delete">
+                <i class="icon-trash icon-white"></i><span>刪除檔案</span>
+            </button>
+            <input type="checkbox" class="toggle">
+            <span>全選</span>
+        </div>
+    </div>
+    <!-- The loading indicator is shown during image processing -->
+    <div class="fileupload-loading">
+    </div>
+    <br>
+    <!-- The table listing the files available for upload/download -->
+    <table id="tbFileList" class="table table-striped">
+        <tbody class="files">
+        </tbody>
+    </table>
+    </form>
+
+
+</body></html>

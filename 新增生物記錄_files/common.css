@@ -1,0 +1,108 @@
+﻿/*全網站通用CSS，請勿放置任何框架相關CSS*/
+
+@import '/CSS/reset.css';           /*reset*/
+@import '/CSS/pure-min.css';        /*css framework*/
+@import '/CSS/common.frame.css';    /*網站框架*/
+@import '/CSS/common.rwd.frame.css';/*網站框架RWD*/
+@import '/CSS/common.menu.css';     /*網站menu*/
+@import '/CSS/common.decorate.css'; /*裝飾條*/
+
+@font-face {
+    font-family: 'cwTeXHei';
+    font-style: normal;
+    font-weight: 500;
+    src: url(//fonts.gstatic.com/ea/cwtexhei/v3/cwTeXHei-zhonly.ttf) format('truetype') ;
+    /*
+    src: url(//fonts.gstatic.com/ea/cwtexhei/v3/cwTeXHei-zhonly.eot);
+    src: url(//fonts.gstatic.com/ea/cwtexhei/v3/cwTeXHei-zhonly.eot?#iefix) format('embedded-opentype'),
+        url(//fonts.gstatic.com/ea/cwtexhei/v3/cwTeXHei-zhonly.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/cwtexhei/v3/cwTeXHei-zhonly.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/cwtexhei/v3/cwTeXHei-zhonly.ttf) format('truetype');
+    */
+}
+
+/* 20160725 Neil: font-face 在 IE11、Edge 底下，會導致 br 變成空格，故針對 br 要額外做 font-fmaily設定 */
+br { font-family:Arial; }
+
+/*表格溢出通用類別*/
+
+.pure-table-overflow 
+{
+    width:100%; overflow:auto;
+}
+
+/* 複寫元件設定值 */
+.pure-img { width: 100% !important; }
+.pure-table-horizontal th { border-left:0; }
+.pure-table-horizontal td { border-right:0; }
+.pure-g div {
+    word-break: break-all;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+        
+p.note, span.note { color:#666666; font-size:0.8em; margin:10px 0; } 
+
+#content { 
+    background-size: 100%;
+    background-image: url(/Images/bg_main2.png);
+    padding-left: 0;  } /*overwrite layout*/
+
+#main_left { background: #F4F3EE;  }
+#main_left_inner { padding-left: 10%; background: #F4F3EE;  }
+#main_left_inner h3 { font-size: 1.5em; color: #AEA79F; border-left: 10px #AEA79F solid; font-weight: bold; font-family: 'cwTeXHei', Arial; padding-left: 2px;   }
+
+#sub-nav { width: 90%; background: #ECE9E2; padding: 25px 0; margin-bottom: 40px; }
+    #sub-nav li { margin: 10px 0 10px 20px; border-bottom: 1px #CCC solid; width:60%; padding-bottom: 10px; background: url('/Images/fig_sub_nav.jpg') no-repeat; padding-left: 18px; background-position: 0 3px; }
+    #sub-nav li a { color: #333; text-decoration: none;  }
+
+#sub-nav {
+     -webkit-border-bottom-right-radius: 50px;
+        -webkit-border-top-right-radius: 50px;
+         -moz-border-radius-bottomright: 50px;
+           -moz-border-radius-topfright: 50px;
+                border-top-right-radius: 50px;
+             border-bottom-right-radius: 50px;
+}
+
+.sub-content { margin: 15px 0; }
+.pure-form { margin: 15px 0; }
+
+#main_right { background:#F4F3EE url('/Images/bg_content_right_repeat.jpg') repeat-y left; }
+#main_right_inner { min-height: 400px; padding-left: 50px; padding-bottom: 30px; }
+    #page_title { position: relative; max-width: 894px; height: 76px; background: url('/Images/bg_content_title.png') no-repeat; }
+    #page_title h2 {  font: 1.5em bold ; font-family: 'cwTeXHei', Arial; padding-top: 22px; padding-left: 44px; }
+    #page_title ul { position: absolute; right: 1em; top: 34px; background: url('/Images/fig_sub_nav.jpg') no-repeat; background-position: 0 3px;  padding-left: 16px;}
+    #page_title ul li { display: inline-block; padding-right: 10px; }
+    #page_title ul li a { color: #666666; font-size: 0.8em; }
+
+#map_canvas { height:600px; }
+
+
+/*當頁面過小*/
+@@media (max-width: 80em) {
+    #page_title { width: auto; }
+}
+
+
+/* 通用類別 */  
+.boxsizing { -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                     box-sizing: border-box; }
+                             
+.btn-orange { background:#F19240; color:White; font-size:0.8em; letter-spacing:0.2em; border: 1px #CE6301 solid;
+                font-family: 'cwTeXHei', serif;
+                -webkit-box-shadow: inset 0px -1px 7px -2px rgba(0,0,0,0.65);
+                    -moz-box-shadow: inset 0px -1px 7px -2px rgba(0,0,0,0.65);
+                        box-shadow: inset 0px -1px 7px -2px rgba(0,0,0,0.65); }
+                              
+.btn-brown { background:Brown ;  color:White;  font-size:0.8em; letter-spacing:0.2em; border: 1px #CE6301 solid; } 
+.btn-blue  { background:#0074E0 ;  color:White;  font-size:0.8em; letter-spacing:0.2em; border: 1px #CE6301 solid; }   
+.btn-delete  { background:FireBrick  ;  color:White;  font-size:0.8em; letter-spacing:0.2em; border: 1px #CE6301 solid; }                          
+        
+.pure-select { height: 2.25em; border: 1px solid #ccc; background-color: #fff; padding: .5em .6em; box-shadow: inset 0 1px 3px #ddd; border-radius: 4px; vertical-align: middle; box-sizing: border-box; letter-spacing: 0.01em; }
+   
+#Keyword {
+    width: 94%;
+}
